@@ -3,7 +3,7 @@
 * PROGRAMMED BY: Andrew Wimer
 * DESCRIPTION: 
 * DATE CREATED: Aug 7 2021
-* LAST UPDATED: Aug 7 2021
+* LAST UPDATED: Aug 8 2021
 */
 
 package getset;
@@ -16,7 +16,7 @@ import java.io.InputStreamReader;
  * GetSet writes setter and getter methods/functions in a specified language
  *  that uses Object-Oriented programming.
  * As of V1, GetSet only writes Java methods, and only writes one method at a
- * time. (Aug 7 2021)
+ * time. (Aug 8 2021)
  * @author Andrew Wimer
  */
 public class GetSet {
