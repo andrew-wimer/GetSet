@@ -6,8 +6,6 @@
 
 package getset;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 /**
  * CLASS DESCRIPTION: JavaMethodPrinter prints the queues of getter and setter
