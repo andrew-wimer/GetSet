@@ -1,7 +1,7 @@
 /*
  * PROGRAMMED BY: Andrew Wimer
 * DATE CREATED: Aug 9 2021
-* LAST UPDATED: Aug 9 2021
+* LAST UPDATED: Aug 11 2021
  */
 package getset;
 
@@ -28,7 +28,7 @@ public class DataMemberMapTest {
    public void testPutDataMember() {
       System.out.println("PutDataMember");
       DataMemberMap instance = new DataMemberMap();
-      instance.putDataMember("name", "String");
+      instance.put("name", "String");
       String value = instance.get("name");
       String expValue = "String";
       assertEquals(expValue, value);
@@ -44,8 +44,8 @@ public class DataMemberMapTest {
       DataMemberMap instance = new DataMemberMap();
       
       System.out.println("");
-      instance.putDataMember("name", "String");
-      instance.clearMap();
+      instance.put("name", "String");
+      instance.clear();
       boolean expResult = true;
       boolean result = instance.isEmpty();
       assertEquals(expResult, result);
@@ -59,7 +59,7 @@ public class DataMemberMapTest {
       System.out.println("IsEmpty");
       DataMemberMap instance = new DataMemberMap();
       System.out.println("");
-      instance.putDataMember("name", "String");
+      instance.put("name", "String");
       boolean expResult = false;
       boolean result = instance.isEmpty();
       assertEquals(expResult, result);
@@ -72,7 +72,7 @@ public class DataMemberMapTest {
    public void testEntrySet() {
       System.out.println("EntrySet");
       DataMemberMap instance = new DataMemberMap();
-      instance.putDataMember("name", "String");
+      instance.put("name", "String");
       LinkedHashMap<String, String> hashMap = new LinkedHashMap();
       hashMap.put("name", "String");
       Set set = new TreeSet();
@@ -92,7 +92,7 @@ public class DataMemberMapTest {
    @Test
    public void testGet() {
       DataMemberMap instance = new DataMemberMap();
-      instance.putDataMember("name", "String");
+      instance.put("name", "String");
       //LinkedHashMap<String, String> hashMap = new LinkedHashMap();
       //hashMap.put("name", "String");
       String result = instance.get("name");
@@ -106,8 +106,8 @@ public class DataMemberMapTest {
    @Test
    public void testSize() {
       DataMemberMap instance = new DataMemberMap();
-      instance.putDataMember("name", "String");
-      instance.putDataMember("name", "int");
+      instance.put("name", "String");
+      instance.put("name", "int");
       int result = instance.size();
       int expResult = 1;
       assertEquals(expResult, result);
