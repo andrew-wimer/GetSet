@@ -1,13 +1,13 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
-* CREATED ON:
-* LAST UPDATE: 
+* CREATED ON: Aug 8 2021
+* LAST UPDATE: Aug 8 2021
 */
 
 package getset;
 
 /**
- * CLASS DESCRIPTION:
+ * CLASS DESCRIPTION: Represents a Java setter method in the form of a string.
  * @author Andrew Wimer
  * 
  */
