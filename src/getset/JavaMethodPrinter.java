@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: August 12 2021
-* LAST UPDATE: August 12 2021
+* LAST UPDATE: August 15 2021
 */
 
 package getset;
@@ -67,7 +67,7 @@ public class JavaMethodPrinter implements MethodPrinter {
    }
 
    @Override
-   public void printToClipboard(MethodQueue getters, MethodQueue setters) {
+   public void copyToClipboard(MethodQueue getters, MethodQueue setters) {
       throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
    }
 
