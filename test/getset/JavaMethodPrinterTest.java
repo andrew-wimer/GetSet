@@ -83,7 +83,7 @@ public class JavaMethodPrinterTest {
     * Test of printToClipboard method, of class JavaMethodPrinter.
     */
    @Test
-   public void testPrintToClipboard() {
+   public void testCopyToClipboard() {
    }
    
 }
