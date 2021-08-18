@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 *  CREATED ON: August 12 2021
-* LAST UPDATE: August 15 2021
+* LAST UPDATE: August 17 2021
 */
 
 package getset;
@@ -10,95 +10,181 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayDeque;
 import java.util.Scanner;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
  * CLASS DESCRIPTION: JavaDataMemberParse parses Java class files for Data Members
  * to add to the DataMemberMap
  * @author Andrew Wimer
- * 
+ * Update Aug 17 2021: close to final version. breaking down parseFile method
+ * into smaller mathods
  */
 public class JavaDataMemberParser implements DataMemberParser  {
    
+   /** stack for brackets not contained in comments found while parsing file. 
+    */
    private ArrayDeque bracketStack = new ArrayDeque();
-   private ArrayDeque declarationStack = new ArrayDeque();
+   /** This regex pattern is for simple data member declarations. */
+   final private Pattern declarationPattern = 
+           Pattern.compile("([a-zA-z]+)\\s([a-zA-z]+)[;]");
+   /** This regex pattern is for data member declarations with initializations. 
+    */
+   final private Pattern initializationPattern = 
+           Pattern.compile("([a-zA-z]+)\\s([a-zA-z]+)\\s[=]");
 
-   /*
-   @Override
-   public File openFile(String filePath) {
-      //parse file from parameterized file path
-      File text = new File(filePath);
-      return text;
-   }
-*/
 
+   /**
+    * Main logic for parsing a Java file for data members
+    * @param filePath the path of the file to parse
+    * @return map of data members declared at class-level in java file
+    * @throws FileNotFoundException 
+    */
    @Override
    public DataMemberMap parseFile(String filePath) throws FileNotFoundException  {
       
       Scanner scnr = new Scanner(new File(filePath));
       DataMemberMap dmMap = new DataMemberMap();
-      String identifier = "";
-      String returnType = "";
       boolean inCommentBlock = false;  
-      int lineNumber = 1;
-      
       
       while(scnr.hasNextLine() && bracketStack.size() != 1){
             
             String line = scnr.nextLine();
-            line = line.substring(0, line.indexOf("//"));
-            if (!isComment(line) && line.contains("{"))
-               bracketStack.push("{");
-        }    
-      
-      while(scnr.hasNextLine()){
-            String line = scnr.nextLine();
-            
-            if (startsCommentBlock(line))
+            if (startsCommentBlock(line) && !endsCommentBlock(line))
             {
                inCommentBlock = true;
                line = line.substring(0, line.indexOf("/*"));
+            } 
+            else if (!startsCommentBlock(line) && endsCommentBlock(line))
+            {
+                  
             }
-        
-            
-            ArrayDeque declarationStack = new ArrayDeque();
-            //while (line.)
-            line = line.substring(0, line.indexOf("//"));
-            
-            
-            
-            System.out.println("line " + lineNumber + " :" + line);
-            
-            lineNumber++;
-        }    
+            trimComments(line);      
+            if (!isComment(line) && line.contains("{"))
+            {
+               bracketStack.push("{");
+               dmMap = matchPatternsToMap(line, dmMap);
+            }
+        }         
       
+      while(scnr.hasNextLine()){
+         String line = scnr.nextLine();
+         
+         if (!isComment(line) && !inCommentBlock && bracketStack.size() == 1)
+            {
+               if (startsCommentBlock(line) && !endsCommentBlock(line))
+               {
+                  inCommentBlock = true;
+                  line = line.substring(0, line.indexOf("/*"));
+               }
+               else if (!startsCommentBlock(line) && endsCommentBlock(line))
+               {
+                  
+               }
+
+               line = trimComments(line);
+               
+               dmMap = matchPatternsToMap(line, dmMap);     
+         }
+      }      
       scnr.close();
       return dmMap;
    }
 
    @Override
+   /**
+    * Returns true if the line contains the characters // which precedes 
+    * comment lines, and *, which precedes javadoc comments
+    * @param line
+    * @return 
+    */
    public boolean isComment(String line) {
-      if (line.startsWith("//") || line.startsWith("*"))
-         return true;
-      
-      return false;
+      return line.startsWith("//") || line.startsWith("*");
    }
    
-   public boolean startsCommentBlock(String line)
+   /**
+    * Returns true if the line contains the characters /* and /** that 
+    * start comment blocks.
+    * @param line
+    * @return 
+    */
+   private boolean startsCommentBlock(String line)
    {
-      if (line.contains("/*") || line.contains("/**"))
-         {
-            return true;
-         }
-      return false;
+      return line.contains("/*") || line.contains("/**");
    }
    
-   public boolean endsCommentBlock(String line)
+   /**
+    * Returns true if line contains the end of a comment block
+    * 
+    */
+   private boolean endsCommentBlock(String line)
    {
-      if (line.contains("/*") || line.contains("/**"))
-         return true;
-      return false;
+      return line.contains("*/");
    }
-
+   
+   /**
+    * Parses a line with one or more comments beginning with / *
+    * and ending with * / (minus the spaces between slash and asterisk)
+    * @param line
+    * @return string line without any commented sections
+    */
+   private String parseMultiCommentLine(String line)
+   {
+      Scanner newScan = new Scanner(line);
+      String next = "";
+      //the new line minus comments that will be returned 
+      String newLine = "";
+      newScan.useDelimiter("/*([a-zA-Z])"+"*/");
+      while (newScan.hasNext())
+      {
+         next = newScan.next();
+         if (!next.contains("*"))
+            newLine += next;
+      }
+      return newLine;
+   }
+   
+   /**
+    * Trims comments from the parameterized file line passed through
+    * @param line
+    * @return the line passed through without comments
+    */
+   private String trimComments(String line)
+   {
+      String lineMinusComments = line;
+      if ((startsCommentBlock(line) && endsCommentBlock(line)))
+      {
+         lineMinusComments = parseMultiCommentLine(line);
+      }
+      else if (line.contains("//"))
+      {
+         lineMinusComments = line.substring(0, line.indexOf("//"));
+      }
+      return lineMinusComments;
+   }
+   
+   /**
+    * Matches the patterns for data types and identifiers 
+    */
+   private DataMemberMap matchPatternsToMap(String line, DataMemberMap dmMap)
+   {
+      DataMemberMap updatedDMMap = dmMap;
+      Matcher equalsMatcher = initializationPattern.matcher(line);
+      Matcher semiColMatcher = declarationPattern.matcher(line);
+      String identifier = "";
+      String returnType = "";
+      if (line.contains("="))
+      {
+         identifier = equalsMatcher.group(2);
+         returnType = equalsMatcher.group(1);
+      }
+      else if (line.contains(";"))
+      {
+         identifier = semiColMatcher.group(2);
+         returnType = semiColMatcher.group(1);
+      }
+      updatedDMMap.put(identifier, returnType);
+      return updatedDMMap;
+   }
 }
