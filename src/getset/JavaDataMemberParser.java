@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 *  CREATED ON: August 12 2021
-* LAST UPDATE: August 17 2021
+* LAST UPDATE: August 18 2021
 */
 
 package getset;
@@ -13,19 +13,19 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
  * CLASS DESCRIPTION: JavaDataMemberParse parses Java class files for Data Members
  * to add to the DataMemberMap
  * @author Andrew Wimer
+ * Update Aug 18 2021: parseFile method has shrunk by containing the process 
+ * to one consecutive while loop instead of two consecutive while loops.
+ * 
  * Update Aug 17 2021: close to final version. breaking down parseFile method
  * into smaller mathods
  */
 public class JavaDataMemberParser implements DataMemberParser  {
    
-   /** stack for brackets not contained in comments found while parsing file. 
-    */
-   private ArrayDeque bracketStack = new ArrayDeque();
+   
    /** This regex pattern is for simple data member declarations. */
    final private Pattern declarationPattern = 
            Pattern.compile("([a-zA-z]+)\\s([a-zA-z]+)[;]");
@@ -43,13 +43,13 @@ public class JavaDataMemberParser implements DataMemberParser  {
     */
    @Override
    public DataMemberMap parseFile(String filePath) throws FileNotFoundException  {
-      
       Scanner scnr = new Scanner(new File(filePath));
       DataMemberMap dmMap = new DataMemberMap();
       boolean inCommentBlock = false;  
+      //stack for braces not contained in comments found while parsing file. 
+      ArrayDeque braceStack = new ArrayDeque();
       
-      while(scnr.hasNextLine() && bracketStack.size() != 1){
-            
+      while(scnr.hasNextLine()){
             String line = scnr.nextLine();
             if (startsCommentBlock(line) && !endsCommentBlock(line))
             {
@@ -58,36 +58,23 @@ public class JavaDataMemberParser implements DataMemberParser  {
             } 
             else if (!startsCommentBlock(line) && endsCommentBlock(line))
             {
-                  
+                inCommentBlock = false;  
             }
-            trimComments(line);      
-            if (!isComment(line) && line.contains("{"))
+            trimComments(line, inCommentBlock);      
+            if (line.contains("{"))
             {
-               bracketStack.push("{");
-               dmMap = matchPatternsToMap(line, dmMap);
+               braceStack.push("{");
             }
-        }         
-      
-      while(scnr.hasNextLine()){
-         String line = scnr.nextLine();
-         
-         if (!isComment(line) && !inCommentBlock && bracketStack.size() == 1)
+            else if (line.contains("}"))
             {
-               if (startsCommentBlock(line) && !endsCommentBlock(line))
-               {
-                  inCommentBlock = true;
-                  line = line.substring(0, line.indexOf("/*"));
-               }
-               else if (!startsCommentBlock(line) && endsCommentBlock(line))
-               {
-                  
-               }
+               braceStack.pop();
+               if(braceStack.size()==0)
+                  break;
+            }
 
-               line = trimComments(line);
-               
-               dmMap = matchPatternsToMap(line, dmMap);     
-         }
-      }      
+            if (!isComment(line) && !inCommentBlock && braceStack.size() == 1)
+               dmMap = matchPatternsToMap(line, dmMap);
+        }         
       scnr.close();
       return dmMap;
    }
@@ -100,6 +87,7 @@ public class JavaDataMemberParser implements DataMemberParser  {
     * @return 
     */
    public boolean isComment(String line) {
+      line = line.trim();
       return line.startsWith("//") || line.startsWith("*");
    }
    
@@ -150,14 +138,18 @@ public class JavaDataMemberParser implements DataMemberParser  {
     * @param line
     * @return the line passed through without comments
     */
-   private String trimComments(String line)
+   private String trimComments(String line, boolean inCommentBlock)
    {
       String lineMinusComments = line;
       if ((startsCommentBlock(line) && endsCommentBlock(line)))
       {
          lineMinusComments = parseMultiCommentLine(line);
       }
-      else if (line.contains("//"))
+      else if (endsCommentBlock(line) & !inCommentBlock)
+      {
+         lineMinusComments = line.substring(line.indexOf("*/"));
+      }
+      if (line.contains("//"))
       {
          lineMinusComments = line.substring(0, line.indexOf("//"));
       }
@@ -174,17 +166,23 @@ public class JavaDataMemberParser implements DataMemberParser  {
       Matcher semiColMatcher = declarationPattern.matcher(line);
       String identifier = "";
       String returnType = "";
-      if (line.contains("="))
+      if (line.contains("=") && equalsMatcher.find())
       {
          identifier = equalsMatcher.group(2);
          returnType = equalsMatcher.group(1);
+         updatedDMMap.put(identifier, returnType);
       }
-      else if (line.contains(";"))
+      else if (line.contains(";") && semiColMatcher.find())
       {
          identifier = semiColMatcher.group(2);
          returnType = semiColMatcher.group(1);
+         updatedDMMap.put(identifier, returnType);
       }
-      updatedDMMap.put(identifier, returnType);
       return updatedDMMap;
+   }
+   
+   private String trimAroundBraces(String line)
+   {
+      return line;
    }
 }
