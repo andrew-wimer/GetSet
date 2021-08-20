@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 *  CREATED ON: August 12 2021
-* LAST UPDATE: August 18 2021
+* LAST UPDATE: August 19 2021
 */
 
 package getset;
@@ -14,9 +14,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * CLASS DESCRIPTION: JavaDataMemberParse parses Java class files for Data Members
- * to add to the DataMemberMap
+ * CLASS DESCRIPTION: JavaDataMemberParse parses Java class files for 
+ * Data Members to add to the DataMemberMap
  * @author Andrew Wimer
+ *  Update Aug 19 2021: originally had trimComments(line, inCommentBlock) in
+ * parseFile. Now changed so line = trimComments(line, inCommentBlock); 
+ * Without this change, comments were never trimmed from the current line. 
+ * 
  * Update Aug 18 2021: parseFile method has shrunk by containing the process 
  * to one consecutive while loop instead of two consecutive while loops.
  * 
@@ -60,7 +64,7 @@ public class JavaDataMemberParser implements DataMemberParser  {
             {
                 inCommentBlock = false;  
             }
-            trimComments(line, inCommentBlock);      
+            line = trimComments(line, inCommentBlock);      
             if (line.contains("{"))
             {
                braceStack.push("{");
@@ -181,8 +185,14 @@ public class JavaDataMemberParser implements DataMemberParser  {
       return updatedDMMap;
    }
    
+   /**
+    * To implement later: trims code around braces in cases where
+    * code precedes a right brace or follows a left brace.
+    * @param line
+    * @return 
+    */
    private String trimAroundBraces(String line)
    {
-      return line;
+      throw new UnsupportedOperationException();
    }
 }
