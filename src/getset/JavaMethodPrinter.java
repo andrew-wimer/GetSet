@@ -1,10 +1,17 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: August 12 2021
-* LAST UPDATE: August 15 2021
+* LAST UPDATE: August 20 2021
 */
 
 package getset;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 
 /**
@@ -13,62 +20,82 @@ package getset;
  * @author Andrew Wimer
  * 
  */
-public class JavaMethodPrinter implements MethodPrinter {
+public class JavaMethodPrinter extends MethodPrinter {
    
+   final private String endOfFile= "e";
+   final private String belowConstructors= "b";
   
-   @Override
-   public void printToFile(MethodQueue getters, MethodQueue setters) {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-   }
-
-    /**
-    * Prints  a full field of getters and full field of setters. 
+   
+   /**
+    * Default printToFile prints the getters and setters to the bottom 
+    * of the file, before the closing brace.
     * @param getters
     * @param setters
-    * @param isAlternating 
+    * @param fileName 
     */
    @Override
-   public void printToConsole(MethodQueue getters, MethodQueue setters) {
-      
-      while(getters.peek() != null)
-      {
-         System.out.println(getters.poll());
-      }
-      
-      while(setters.peek() != null)
-      {
-         System.out.println(setters.poll());
-      }
+   public void printToFile(MethodQueue getters, MethodQueue setters,
+      String fileName) throws FileNotFoundException 
+   {  
+      Scanner scnr = new Scanner(new File(fileName));
+      printToFileBottom(getters, setters, fileName, scnr);
 
+   }  
+   
+   /**
+    * placementLocation parameterized printToFile prints the getters and setters 
+    * to the user-specified location in the file.
+    * @param getters
+    * @param setters
+    * @param fileName 
+    */
+      public void printToFile(MethodQueue getters, MethodQueue setters,
+           String fileName, String placementLocation) 
+              throws FileNotFoundException
+      {
+      
+      Scanner scnr = new Scanner(new File(fileName));
+         
+      if (placementLocation.equalsIgnoreCase(endOfFile))
+         printToFileBottom(getters, setters, fileName, scnr);
+      else if (placementLocation.equalsIgnoreCase(belowConstructors))
+         printBelowConstructors(getters, setters, fileName, scnr);
+      
+   }  
+   
+    /**
+    * Prints getters and setters to the bottom of the specified file
+    */
+   private void printToFileBottom(MethodQueue getters, MethodQueue setters,
+           String fileName, Scanner fileScnr)
+   {
+      List<String> fileAsList = new ArrayList();
+      ArrayDeque<String> braceStack = new ArrayDeque();
+      
+      while (fileScnr.hasNext())
+      {
+         String line = fileScnr.next();
+         fileAsList.add(line);
+      }
    }
    
    /**
-    * Prints alternating setters and getters to the console instead of
-    * printing a full field of getters and full field of setters.
-    * @param getters
-    * @param setters
-    * @param isAlternating 
+    * Prints getters and setters to below the constructors in a file 
     */
-   public void printToConsoleAlternating(MethodQueue getters, 
-           MethodQueue setters, boolean isAlternating) {
-
-      //if the flag for alternating getters and setters is not true,
-      //then uses default option to print separate fields of setters and getters
-      if (isAlternating != true)
-         printToConsole(getters, setters);
-      else
-      {
-         while(getters.peek() != null && setters.peek() != null)
-         {
-            System.out.println(getters.poll());
-            System.out.println(setters.poll());
-         }
-      }
+   private void printBelowConstructors(MethodQueue getters, MethodQueue setters,
+           String fileName, Scanner fileScnr)
+   {
+      throw new UnsupportedOperationException();
    }
-
-   @Override
-   public void copyToClipboard(MethodQueue getters, MethodQueue setters) {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   
+   
+   private void printConsecutively()
+   {
+      
    }
-
+   
+   private void printAlternating()
+   {
+      
+   }
 }
