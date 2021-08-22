@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: August 12 2021
-* LAST UPDATE: August 21 2021
+* LAST UPDATE: August 22 2021
 */
 
 package getset;
@@ -24,7 +24,12 @@ import java.util.logging.Logger;
  * CLASS DESCRIPTION: JavaMethodPrinter prints the queues of getter and setter
  * methods to either the console, the clipboard, or to a file.
  * @author Andrew Wimer
- * aug 21 2021 - 
+ * aug 22 2021 - Bugfixes: - replaced hasNext and next in printToFileBottom
+ *  with hasNextLine and nextLine.
+ * -getterSetterList in printAlternating and printSeparately are now 
+ * initialize while fileAsList is no longer the parameter or return
+ * aug 21 2021 - removed copyToClipboard and printToConsole, now extends
+ * instead of implementing MethodPrinter
  * 
  */
 public class JavaMethodPrinter extends MethodPrinter {
@@ -48,7 +53,8 @@ public class JavaMethodPrinter extends MethodPrinter {
       try {
          printToFileBottom(getters, setters, fileName, scnr);
       } catch (IOException ex) {
-         Logger.getLogger(JavaMethodPrinter.class.getName()).log(Level.SEVERE, null, ex);
+         Logger.getLogger(JavaMethodPrinter.class.getName()).log(Level.SEVERE, 
+                 null, ex);
       }
 
    }  
@@ -75,7 +81,8 @@ public class JavaMethodPrinter extends MethodPrinter {
    }  
    
     /**
-    * Prints getters and setters to the bottom of the specified file
+    * Prints getters and setters to the bottom of the specified file,
+    * before the final closing brace '}' character found in the file.
     */
    private void printToFileBottom(MethodQueue getters, MethodQueue setters,
            String fileName, Scanner fileScnr) throws IOException
@@ -84,15 +91,21 @@ public class JavaMethodPrinter extends MethodPrinter {
       List<String> getterSetterList = new ArrayList();
       int indexOfLastBrace = 0;
       
-      while (fileScnr.hasNext())
+      while (fileScnr.hasNextLine())
       {
-         String line = fileScnr.next();
+         String line = fileScnr.nextLine();
          fileAsList.add(line);
       }
-      indexOfLastBrace = fileAsList.lastIndexOf("}");
-      getterSetterList = printSeparately(getters, setters ,fileAsList);
+      
+      int i = fileAsList.size()-1;
+      while (!fileAsList.get(i).contains("}") && i >= 0)
+      {
+         i--;
+      }
+      
+      indexOfLastBrace = i;
+      getterSetterList = printSeparately(getters, setters);
       fileAsList.addAll(indexOfLastBrace, getterSetterList);
-      fileAsList.add("}");
       
       Path file = Paths.get(fileName);
       Files.write(file, fileAsList, StandardCharsets.UTF_8);
@@ -111,41 +124,41 @@ public class JavaMethodPrinter extends MethodPrinter {
     * Prints getters and setters in two separate consecutive lists.
     * @param getters
     * @param setters
-    * @param fileAsList
     * @return 
     */
    private List<String> printSeparately(MethodQueue getters, 
-           MethodQueue setters, List<String> fileAsList)
+           MethodQueue setters)
    {
+      List<String> getterSetterList = new ArrayList();
       while(getters.peek() != null)
       {
-         fileAsList.add(getters.poll());
+         getterSetterList.add(getters.poll());
       }
       
       while(setters.peek() != null)
       {
-         fileAsList.add(setters.poll());
+         getterSetterList.add(setters.poll());
       }
-      return fileAsList;
+      return getterSetterList;
    }
    
    /**
     * Prints alternating between setters and getters.
     * @param getters
     * @param setters
-    * @param fileAsList
     * @return 
     */
    private List<String> printAlternating(MethodQueue getters, 
-           MethodQueue setters, List<String> fileAsList)
+           MethodQueue setters)
    {
+      List<String> getterSetterList = new ArrayList();
       while(getters.peek() != null)
       {
-         fileAsList.add(getters.poll());
-         fileAsList.add(setters.poll());
+         getterSetterList.add(getters.poll());
+         getterSetterList.add(setters.poll());
       }
       
-      return fileAsList;
+      return getterSetterList;
    }
    
     /**
