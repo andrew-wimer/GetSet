@@ -26,7 +26,6 @@ abstract public void printToFile(MethodQueue getters, MethodQueue setters,
     * Prints  a full field of getters and full field of setters. 
     * @param getters
     * @param setters
-    * @param isAlternating 
     */
    public void printToConsole(MethodQueue getters, MethodQueue setters) {
       
@@ -46,7 +45,6 @@ abstract public void printToFile(MethodQueue getters, MethodQueue setters,
     * printing a full field of getters and full field of setters.
     * @param getters
     * @param setters
-    * @param isAlternating 
     */
    public void printToConsoleAlternating(MethodQueue getters, 
            MethodQueue setters) {
