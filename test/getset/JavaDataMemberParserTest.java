@@ -11,14 +11,21 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * v1. 
+ * v2. 
  * For cases of declarations:
  * Matches expected results for multi line comments on separate lines,
- * single line comments beginning with //. Does not match expected results
+ * single line comments beginning with //. Also now matches expected results
  * when a multi line comment surrounds an initialization or declaration 
  * on the same line.
  * 
- * For cases of initializations:
+ * For cases of initializations: 
+ * Matches expected results for multi line comments on separate lines,
+ * single line comments beginning with //. Also now matches expected results
+ * when a multi line comment surrounds an initialization or declaration 
+ * on the same line.
+ * 
+ * For both cases: Fails when line ends with end comment, if no start comment
+ * is initiated earlier
  * 
  * @author Andrew Wimer
  */
@@ -33,7 +40,7 @@ public class JavaDataMemberParserTest {
    @Test
    public void testParseFile() throws Exception {
       System.out.println("parseFile");
-      String filePath = "JavaParserTestCase2.txt";
+      String filePath = "JavaParserTestCase2.txt"; 
       JavaDataMemberParser instance = new JavaDataMemberParser();
       DataMemberMap expResult = new DataMemberMap();
       expResult.put("name", "String");
