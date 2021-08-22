@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * DATE CREATED: Aug 8 2021
-* LAST UPDATED: Aug 11 2021
+* LAST UPDATED: Aug 22 2021
 */
 
 package getset;
@@ -14,7 +14,7 @@ import java.util.Set;
  * CLASS DESCRIPTION: DataMemberMap is a mapping of identifiers (keys) and
  data types/return types (values) for Data Members
  * @author Andrew Wimer
- * 
+ * aug 22 2021 - added keySet method
  */
 public class DataMemberMap {
    
@@ -73,6 +73,15 @@ public class DataMemberMap {
    public Set<Map.Entry<String, String>> entrySet()
    {
       return map.entrySet();
+   }
+   
+    /**
+    * Returns a Set view of the mappings contained in this map.
+    * @return 
+    */
+   public Set<String>  keySet()
+   {
+      return map.keySet();
    }
    
    /**
