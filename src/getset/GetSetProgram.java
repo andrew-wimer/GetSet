@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 19 2021
-* LAST UPDATE: Aug 19 2021
+* LAST UPDATE: Aug 23 2021
 */
 
 package getset;
@@ -32,6 +32,33 @@ public class GetSetProgram {
    {
       BufferedReader reader = new BufferedReader(
             new InputStreamReader(System.in));
+      String choice = "";
+      do
+      {
+         System.out.println("GetSet Main Menu");
+         System.out.println("Choose an objected-oriented language: ");
+         System.out.print("[j] Java\n");
+         System.out.print("[x] Exit\n");
+         System.out.print("\nEnter Menu Option: ");
+
+         choice = reader.readLine();
+
+         switch(choice.toLowerCase()){
+            
+            
+            case "x": 
+               System.out.println("Closing program...");
+               System.exit(0);
+            default:
+            System.out.println("Invalid choice; try again.");
+                  break;
+         }
+      } while (!choice.equalsIgnoreCase("x"));
+      
+      
+      /*
+      BufferedReader reader = new BufferedReader(
+            new InputStreamReader(System.in));
        String id; // identifier
        String returnType; //data type of identifier
        
@@ -48,12 +75,14 @@ public class GetSetProgram {
         System.out.println(js.writeSetter(id, returnType));
 
         reader.close();
+*/
    }
    
    public void start(String progLanguage)
    {
       
    }
+
    
 
 }
