@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 19 2021
-* LAST UPDATE: Aug 23 2021
+* LAST UPDATE: Aug 24 2021
 */
 
 package getset;
@@ -42,10 +42,14 @@ public class GetSetProgram {
          System.out.print("\nEnter Menu Option: ");
 
          choice = reader.readLine();
+         
+         
 
          switch(choice.toLowerCase()){
             
-            
+            case "j":
+               GetSetBranch jGSB = new JavaGSBranch();
+               jGSB.run();
             case "x": 
                System.out.println("Closing program...");
                System.exit(0);
@@ -54,7 +58,7 @@ public class GetSetProgram {
                   break;
          }
       } while (!choice.equalsIgnoreCase("x"));
-      
+      reader.close();
       
       /*
       BufferedReader reader = new BufferedReader(
