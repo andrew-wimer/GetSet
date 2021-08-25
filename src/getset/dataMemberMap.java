@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * DATE CREATED: Aug 8 2021
-* LAST UPDATED: Aug 9 2021
+* LAST UPDATED: Aug 22 2021
 */
 
 package getset;
@@ -11,12 +11,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * CLASS DESCRIPTION: dataMemberMap is a mapping of identifiers (keys) and
+ * CLASS DESCRIPTION: DataMemberMap is a mapping of identifiers (keys) and
  data types/return types (values) for Data Members
  * @author Andrew Wimer
- * 
+ * aug 22 2021 - added keySet method
  */
-public class dataMemberMap {
+public class DataMemberMap {
    
    //map that stores data members
    private Map<String, String> map = new LinkedHashMap();
@@ -24,7 +24,7 @@ public class dataMemberMap {
    /**
     * Default constructor.
     */
-   public dataMemberMap()
+   public DataMemberMap()
    {
       
    }
@@ -33,7 +33,7 @@ public class dataMemberMap {
     * Constructs data member map from existing data member map
     * @param map 
     */
-    public dataMemberMap(Map map)
+    public DataMemberMap(Map map)
    {
       this.map = (LinkedHashMap<String, String>) map;
    }
@@ -44,7 +44,7 @@ public class dataMemberMap {
      * @param identifier Data member's identifier.
      * @param returnType  Data member's return type.
      */
-   public void putDataMember(String identifier, String returnType)
+   public void put(String identifier, String returnType)
    {
       map.put(identifier, returnType);
    }
@@ -52,7 +52,7 @@ public class dataMemberMap {
    /**
     * Clears the map. 
     */
-   public void clearMap()
+   public void clear()
    {
       map.clear();
    }
@@ -73,6 +73,15 @@ public class dataMemberMap {
    public Set<Map.Entry<String, String>> entrySet()
    {
       return map.entrySet();
+   }
+   
+    /**
+    * Returns a Set view of the mappings contained in this map.
+    * @return 
+    */
+   public Set<String>  keySet()
+   {
+      return map.keySet();
    }
    
    /**
