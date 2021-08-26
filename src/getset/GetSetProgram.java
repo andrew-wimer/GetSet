@@ -33,26 +33,21 @@ public class GetSetProgram {
       BufferedReader reader = new BufferedReader(
             new InputStreamReader(System.in));
       String choice = "";
+      
       do
       {
-         System.out.println("GetSet Main Menu");
-         System.out.println("Choose an objected-oriented language: ");
-         System.out.print("[j] Java\n");
-         System.out.print("[x] Exit\n");
-         System.out.print("\nEnter Menu Option: ");
-
+         displayMainMenu();
          choice = reader.readLine();
-         
-         
-
          switch(choice.toLowerCase()){
             
-            case "j":
-               GetSetBranch jGSB = new JavaGSBranch();
-               jGSB.run();
             case "x": 
                System.out.println("Closing program...");
                System.exit(0);
+               break;
+            case "j":
+               GetSetBranch jGSB = new JavaGSBranch();
+               jGSB.run();
+               break;
             default:
             System.out.println("Invalid choice; try again.");
                   break;
@@ -85,6 +80,15 @@ public class GetSetProgram {
    public void start(String progLanguage)
    {
       
+   }
+   
+   public void displayMainMenu()
+   {
+      System.out.println("GetSet Main Menu");
+         System.out.println("Choose an objected-oriented language: ");
+         System.out.print("[j] Java\n");
+         System.out.print("[x] Exit\n");
+         System.out.print("\nEnter Menu Option: ");
    }
 
    
