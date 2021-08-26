@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 23 2021
-* LAST UPDATE:  Aug 24 2021
+* LAST UPDATE:  Aug 25 2021
 */
 
 package getset;
@@ -21,6 +21,10 @@ public interface GetSetBranch {
    
    public void languageMainMenu() throws IOException;
    
-   public void outputSelection(DataMemberMap dMM) throws IOException;
+   public void outputSelectionMenu(DataMemberMap dMM) throws IOException;
+   
+   public String getFilePath() throws IOException;
+   
+   public void closeProgram();
 
 }
