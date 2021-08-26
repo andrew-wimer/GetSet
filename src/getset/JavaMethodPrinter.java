@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: August 12 2021
-* LAST UPDATE: August 22 2021
+* LAST UPDATE: August 25 2021
 */
 
 package getset;
@@ -69,15 +69,13 @@ public class JavaMethodPrinter extends MethodPrinter {
       public void printToFile(MethodQueue getters, MethodQueue setters,
            String fileName, String placementLocation) 
               throws FileNotFoundException, IOException
-      {
-      
+      { 
       Scanner scnr = new Scanner(new File(fileName));
          
       if (placementLocation.equalsIgnoreCase(endOfFile))
          printToFileBottom(getters, setters, fileName, scnr);
       else if (placementLocation.equalsIgnoreCase(belowConstructors))
-         printBelowConstructors(getters, setters, fileName, scnr);
-      
+         printBelowConstructors(getters, setters, fileName, scnr);    
    }  
    
     /**
@@ -89,7 +87,6 @@ public class JavaMethodPrinter extends MethodPrinter {
    {
       List<String> fileAsList = new ArrayList();
       List<String> getterSetterList = new ArrayList();
-      int indexOfLastBrace = 0;
       
       while (fileScnr.hasNextLine())
       {
@@ -97,13 +94,12 @@ public class JavaMethodPrinter extends MethodPrinter {
          fileAsList.add(line);
       }
       
-      int i = fileAsList.size()-1;
-      while (!fileAsList.get(i).contains("}") && i >= 0)
+      int indexOfLastBrace = fileAsList.size()-1;
+      while (!fileAsList.get(indexOfLastBrace).contains("}") && 
+              indexOfLastBrace>= 0)
       {
-         i--;
+         indexOfLastBrace--;
       }
-      
-      indexOfLastBrace = i;
       getterSetterList = printSeparately(getters, setters);
       fileAsList.addAll(indexOfLastBrace, getterSetterList);
       
@@ -117,7 +113,7 @@ public class JavaMethodPrinter extends MethodPrinter {
    private void printBelowConstructors(MethodQueue getters, MethodQueue setters,
            String fileName, Scanner fileScnr)
    {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("Unsupported operation.");
    }
    
    /**
