@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 19 2021
-* LAST UPDATE: Aug 24 2021
+* LAST UPDATE: Aug 26 2021
 */
 
 package getset;
@@ -18,6 +18,9 @@ import java.io.InputStreamReader;
  */
 public class GetSetProgram {
    
+   /**
+    * Default constructor
+    */
    public GetSetProgram()
    {
       
@@ -28,6 +31,10 @@ public class GetSetProgram {
       
    }
    
+   /**
+    * Runs main top-level menu for the GetSet program.
+    * @throws IOException 
+    */
    public void start() throws IOException
    {
       BufferedReader reader = new BufferedReader(
@@ -40,41 +47,20 @@ public class GetSetProgram {
          choice = reader.readLine();
          switch(choice.toLowerCase()){
             
+            case "j":
+               JavaGSBranch jGSB = new JavaGSBranch();
+               jGSB.run();
+               break;
             case "x": 
                System.out.println("Closing program...");
                System.exit(0);
                break;
-            case "j":
-               GetSetBranch jGSB = new JavaGSBranch();
-               jGSB.run();
-               break;
             default:
-            System.out.println("Invalid choice; try again.");
-                  break;
+               System.out.println("Invalid choice; try again.");
+               break;
          }
       } while (!choice.equalsIgnoreCase("x"));
       reader.close();
-      
-      /*
-      BufferedReader reader = new BufferedReader(
-            new InputStreamReader(System.in));
-       String id; // identifier
-       String returnType; //data type of identifier
-       
-       System.out.println("Enter your identifier: ");
-       id = reader.readLine();
-       System.out.println("identifier  = " + id);
-       System.out.println("Enter your data type: ");
-       returnType = reader.readLine();
-       System.out.println("data type  = " + returnType);
-
-       Setter js = new JavaSetter();
-       Getter jg = new JavaGetter();
-       System.out.println(jg.writeGetter(id, returnType));
-        System.out.println(js.writeSetter(id, returnType));
-
-        reader.close();
-*/
    }
    
    public void start(String progLanguage)
@@ -82,6 +68,9 @@ public class GetSetProgram {
       
    }
    
+   /**
+    * Displays top-level main menu options. 
+    */
    public void displayMainMenu()
    {
       System.out.println("GetSet Main Menu");
