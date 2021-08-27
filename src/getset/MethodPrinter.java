@@ -1,11 +1,15 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: August 12 2021
-* LAST UPDATE: August 20 2021
+* LAST UPDATE: August 26 2021
 */
 
 package getset;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.StringSelection;
 import java.io.FileNotFoundException;
 
 /**
@@ -57,7 +61,21 @@ abstract public void printToFile(MethodQueue getters, MethodQueue setters,
    }
 
    public void copyToClipboard(MethodQueue getters, MethodQueue setters) {
-      throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      String getSetList = "";
+      
+      while(getters.peek() != null)
+      {
+         getSetList += getters.poll();
+      }
+      
+      while(setters.peek() != null)
+      {
+         getSetList += setters.poll();
+      }
+      
+      StringSelection stringSelection = new StringSelection(getSetList);
+      Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+      clipboard.setContents(stringSelection, (ClipboardOwner) this);
    }
 
 }
