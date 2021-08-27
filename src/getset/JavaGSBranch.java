@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 23 2021
-* LAST UPDATE: Aug 25 2021
+* LAST UPDATE: Aug 26 2021
 */
 
 package getset;
@@ -10,8 +10,6 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * CLASS DESCRIPTION: Handles inputs, submenus, and program functioning 
@@ -19,23 +17,24 @@ import java.util.logging.Logger;
  * @author Andrew Wimer
  * Aug 25 2021
  */
-public class JavaGSBranch implements GetSetBranch {
+public class JavaGSBranch extends GetSetBranch {
 
-   
-   public void run()
+   /**
+    * Entry into the Java branch of GetSet.
+    * @throws IOException
+    * @throws FileNotFoundException 
+    */
+   @Override
+   public void run() throws IOException, FileNotFoundException
    {
-      try {
          languageMainMenu();
-      } catch (IOException ex) {
-         Logger.getLogger(JavaGSBranch.class.getName()).log(Level.SEVERE, null, ex);
-      }  
    }
    
    /**
     * Displays the selection of options available in the main menu for
     * importing Java data members. 
     */
-   public void displayLanguageMainMenu()
+   private void displayLanguageMainMenu()
    {
       System.out.println("Java Main Menu");
          System.out.println("Choose method of importing data members: ");
@@ -51,7 +50,6 @@ public class JavaGSBranch implements GetSetBranch {
     * Main GetSet menu for Java language selection
     * @throws IOException 
     */
-   @Override
    public void languageMainMenu() throws IOException {
       BufferedReader reader = 
               new BufferedReader(new InputStreamReader(System.in));
@@ -82,7 +80,7 @@ public class JavaGSBranch implements GetSetBranch {
     * Displays the selection of options available in the Output Selection
     * menu
     */
-   public void displayOutputSelectionMenu()
+   private void displayOutputSelectionMenu()
    {
       System.out.println("Output Selection Menu");
          System.out.println("Choose method of outputting data members: ");
@@ -99,7 +97,6 @@ public class JavaGSBranch implements GetSetBranch {
     * processed data members.
     * @throws IOException 
     */
-   @Override
    public void outputSelectionMenu(DataMemberMap dMM) throws IOException {  
       BufferedReader reader = 
               new BufferedReader(new InputStreamReader(System.in));
@@ -113,6 +110,12 @@ public class JavaGSBranch implements GetSetBranch {
          switch(choice.toLowerCase()){          
             case "f":
                printToFile(dMM);
+               break;
+            case "t":
+               printToConsole(dMM);
+               break;
+             case "c":
+               copyToClipboard(dMM);
                break;
             case "b":
                break;
@@ -137,8 +140,14 @@ public class JavaGSBranch implements GetSetBranch {
        String filePath = getFilePath();
        DataMemberParser dMP = new JavaDataMemberParser();
        DataMemberMap dMM = new DataMemberMap();
+       try{
        dMM = dMP.parseFile(filePath);
        outputSelectionMenu(dMM);  
+       }
+       catch(IOException e)
+       {
+          System.out.println("File not found.");
+       }
    }
    
    /**
@@ -153,42 +162,21 @@ public class JavaGSBranch implements GetSetBranch {
       MethodPrinter mPrint = new JavaMethodPrinter();
       MethodQueue[] getsSets = new LinkedMethodQueue[2];
       getsSets = mTM.generateMethodQueues(dMM);
+      try{
       mPrint.printToFile(getsSets[0], getsSets[1], filePath);
       System.out.println("Methods printed to file: " +  filePath);
-   }
-   
-   /**
-    * Method for user to input the path of a file.
-    * @return
-    * @throws IOException 
-    */
-   public String getFilePath() throws IOException
-   {
-      BufferedReader reader = 
-              new BufferedReader(new InputStreamReader(System.in));
-       System.out.println("Enter your filepath: ");
-       String filePath = "";
-       filePath = reader.readLine();
-       return filePath;
-   }
-   
-   /**
-    * Closes the GetSet program.
-    */
-   public void closeProgram()
-   {
-      System.out.println("Closing program...");
-      System.exit(0);
+      }
+      catch(IOException e)
+       {
+          System.out.println("File not found.");
+       }
    }
    
   /**
     * Outputs getters and setters to console
-    * @throws FileNotFoundException
-    * @throws IOException 
     */
    public void printToConsole(DataMemberMap dMM)
    {
-
       MethodPrinter mPrint = new JavaMethodPrinter();
       MethodQueue[] getsSets = dataMembersToQueue(dMM);
       mPrint.printToConsole(getsSets[0], getsSets[1]);
@@ -197,13 +185,22 @@ public class JavaGSBranch implements GetSetBranch {
    /**
     * Creates array of getter and setter queues from the mapping of
     * identifiers to return types in the DataMemberMap. 
-    * @throws FileNotFoundException
-    * @throws IOException 
     */
    public MethodQueue[] dataMembersToQueue(DataMemberMap dMM)
    {
         MembersToMethods mTM = new JavaMemsToMethods();
       return mTM.generateMethodQueues(dMM);
       
+   }
+   
+   /**
+    * Outputs getters and setters to clipboard
+    * @throws FileNotFoundException
+    */
+   public void copyToClipboard(DataMemberMap dMM)
+   {
+      MethodPrinter mPrint = new JavaMethodPrinter();
+      MethodQueue[] getsSets = dataMembersToQueue(dMM);
+      mPrint.copyToClipboard(getsSets[0], getsSets[1]);
    }
 }
