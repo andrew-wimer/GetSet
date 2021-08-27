@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: August 12 2021
-* LAST UPDATE: August 25 2021
+* LAST UPDATE: August 26 2021
 */
 
 package getset;
@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -96,14 +95,14 @@ public class JavaMethodPrinter extends MethodPrinter {
       
       int indexOfLastBrace = fileAsList.size()-1;
       while (!fileAsList.get(indexOfLastBrace).contains("}") && 
-              indexOfLastBrace>= 0)
+              indexOfLastBrace > 0)
       {
          indexOfLastBrace--;
       }
       getterSetterList = printSeparately(getters, setters);
       fileAsList.addAll(indexOfLastBrace, getterSetterList);
       
-      Path file = Paths.get(fileName);
+      Path file = Path.of(fileName);
       Files.write(file, fileAsList, StandardCharsets.UTF_8);
    }
    
