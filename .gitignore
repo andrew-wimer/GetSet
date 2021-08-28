@@ -1,5 +1,12 @@
-
-dist/GetSet.jar
-nbproject/private/private.xml
 *.class
-build/built-jar.properties
+.mtj.tmp/
+*.war
+*.ear
+hs_err_pid*
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
