@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 23 2021
-* LAST UPDATE: Aug 26 2021
+* LAST UPDATE: Aug 27 2021
 */
 
 package getset;
@@ -15,7 +15,8 @@ import java.io.InputStreamReader;
  * CLASS DESCRIPTION: Handles inputs, submenus, and program functioning 
  * when java is selected as the language to generate getters and setters.
  * @author Andrew Wimer
- * Aug 25 2021
+ * Aug 27 2021 Changed printToFile to use the specific method for
+ * file formatted method queues
  */
 public class JavaGSBranch extends GetSetBranch {
 
@@ -38,9 +39,9 @@ public class JavaGSBranch extends GetSetBranch {
    {
       System.out.println("Java Main Menu");
          System.out.println("Choose method of importing data members: ");
-         System.out.print("[c] Input to console\n");
+         //System.out.print("[c] Input to console\n");
          System.out.print("[j] Import from Java file \n");
-         System.out.print("[l] Import from list in text file \n");
+         //System.out.print("[t] Import from list in text file \n");
          System.out.print("[b] Back \n");
          System.out.print("[x] Exit program\n");
          System.out.print("\nEnter Menu Option: ");
@@ -158,10 +159,10 @@ public class JavaGSBranch extends GetSetBranch {
    public void printToFile(DataMemberMap dMM) throws FileNotFoundException, IOException
    {
        String filePath = getFilePath();
-       MembersToMethods mTM = new JavaMemsToMethods();
+       JavaMemsToMethods mTM = new JavaMemsToMethods();
       MethodPrinter mPrint = new JavaMethodPrinter();
       MethodQueue[] getsSets = new LinkedMethodQueue[2];
-      getsSets = mTM.generateMethodQueues(dMM);
+      getsSets = mTM.fileFormattedMethodQueues(dMM);
       try{
       mPrint.printToFile(getsSets[0], getsSets[1], filePath);
       System.out.println("Methods printed to file: " +  filePath);
