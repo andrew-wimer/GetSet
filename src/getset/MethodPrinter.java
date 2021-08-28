@@ -1,14 +1,13 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: August 12 2021
-* LAST UPDATE: August 26 2021
+* LAST UPDATE: August 27 2021
 */
 
 package getset;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.StringSelection;
 import java.io.FileNotFoundException;
 
@@ -33,15 +32,11 @@ abstract public void printToFile(MethodQueue getters, MethodQueue setters,
     */
    public void printToConsole(MethodQueue getters, MethodQueue setters) {
       
-      while(getters.peek() != null)
-      {
-         System.out.println(getters.poll());
-      }
+      //String getSetList = "";
       
-      while(setters.peek() != null)
-      {
-         System.out.println(setters.poll());
-      }
+      //getSetList = separateGetSetList(getters, setters);
+      
+      System.out.println(separateGetSetList(getters, setters));
    }
    
    /**
@@ -53,14 +48,33 @@ abstract public void printToFile(MethodQueue getters, MethodQueue setters,
    public void printToConsoleAlternating(MethodQueue getters, 
            MethodQueue setters) {
 
-         while(getters.peek() != null && setters.peek() != null)
-         {
-            System.out.println(getters.poll());
-            System.out.println(setters.poll());
-         }
+      System.out.println(alternatingGetSetList(getters, setters));
+
    }
 
+   /**
+    * Copies  a full field of getters and full field of setters to clipboard. 
+    * @param getters
+    * @param setters
+    */
    public void copyToClipboard(MethodQueue getters, MethodQueue setters) {
+      String getSetList = "";
+      
+      getSetList = separateGetSetList(getters, setters);
+      
+      StringSelection stringSelection = new StringSelection(getSetList);
+      Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+      clipboard.setContents(stringSelection, null);
+   }
+   
+   /**
+    * Returns a string of consecutive getters followed by consecutive setters
+    * @param getters
+    * @param setters
+    * @return 
+    */
+   protected String separateGetSetList(MethodQueue getters, MethodQueue setters)
+   {
       String getSetList = "";
       
       while(getters.peek() != null)
@@ -73,9 +87,28 @@ abstract public void printToFile(MethodQueue getters, MethodQueue setters,
          getSetList += setters.poll();
       }
       
-      StringSelection stringSelection = new StringSelection(getSetList);
-      Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-      clipboard.setContents(stringSelection, (ClipboardOwner) this);
+      return getSetList;
    }
-
+   
+   /**
+    * Returns a string of alternating getters and setters
+    * @param getters
+    * @param setters
+    * @return 
+    */
+   protected String alternatingGetSetList(MethodQueue getters, 
+           MethodQueue setters)
+   {
+      String getSetList = "";
+      
+      while(getters.peek() != null && setters.peek() != null)
+         {
+            getSetList += getters.poll();
+            getSetList += setters.poll();
+         }
+      
+      return getSetList;
+   }
+   
+   
 }
