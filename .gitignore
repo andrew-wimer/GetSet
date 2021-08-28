@@ -2,3 +2,4 @@
 dist/GetSet.jar
 nbproject/private/private.xml
 *.class
+build/built-jar.properties
