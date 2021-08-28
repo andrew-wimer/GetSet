@@ -5,6 +5,8 @@
  */
 package getset;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import org.junit.After;
@@ -72,6 +74,15 @@ public class MethodPrinterTest {
     */
    @Test
    public void testCopyToClipboard() {
+      MethodPrinter instance = new JavaMethodPrinter();
+      MethodQueue getters = new LinkedMethodQueue();
+   getters.add("Getter1");
+   getters.add("Getter2");
+   MethodQueue setters = new LinkedMethodQueue();
+   setters.add("Setter1");
+   setters.add("Setter2");
+   instance.copyToClipboard(getters, setters);
+   Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
    }
 
    public class MethodPrinterImpl extends MethodPrinter {
