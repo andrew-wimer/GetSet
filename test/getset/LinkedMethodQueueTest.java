@@ -5,6 +5,8 @@
  */
 package getset;
 
+import methodprinting.MethodQueue;
+import methodprinting.LinkedMethodQueue;
 import java.util.LinkedList;
 import java.util.Queue;
 import org.junit.Test;

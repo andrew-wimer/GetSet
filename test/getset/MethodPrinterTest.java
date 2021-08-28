@@ -5,6 +5,7 @@
  */
 package getset;
 
+import methodprinting.*;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.io.ByteArrayOutputStream;
