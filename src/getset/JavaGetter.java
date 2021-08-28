@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 8 2021
-* LAST UPDATE: Aug 8 2021
+* LAST UPDATE: Aug 27 2021
 */
 
 package getset;
@@ -10,7 +10,8 @@ package getset;
  * CLASS DESCRIPTION: Writes a java getter from a given identifier
  * and return type.
  * @author Andrew Wimer
- * 
+ * Aug 27 2021 - added extra newline escape sequence to  beginning and end
+ * of each getter string
  */
 public class JavaGetter implements Getter {
    
@@ -35,9 +36,9 @@ public class JavaGetter implements Getter {
       String getterString = "";
       
       
-      getterString += "public " + returnType + " get" + 
+      getterString += "\npublic " + returnType + " get" + 
               identifier.substring(0,1).toUpperCase() + identifier.substring(1)
-              + "()" + "\n{\n   return " + identifier + ";" + "\n}";
+              + "()" + "\n{\n   return " + identifier + ";" + "\n}\n";
       
       return getterString;
    }  
@@ -57,7 +58,7 @@ public class JavaGetter implements Getter {
       
       getterString += "\tpublic " + returnType + " get" + 
               identifier.substring(0,1).toUpperCase() + identifier.substring(1)
-              + "()" + "\n\t{\n\t\treturn " + identifier + ";" + "\n\t}";
+              + "()" + "\n\t{\n\t\treturn " + identifier + ";" + "\n\t}\n";
       
       return getterString;
    }
