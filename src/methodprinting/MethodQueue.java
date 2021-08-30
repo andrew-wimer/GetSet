@@ -12,6 +12,7 @@ package methodprinting;
  * of methods ensures that both getters and setters will be printed in 
  * First-in, First-out basis.
  * @author Andrew Wimer
+ * Aug 29 2021 - added size method
  */
 public interface MethodQueue {
    
@@ -31,4 +32,8 @@ public interface MethodQueue {
    public String element();
    
    public boolean add(String method);
+   
+   public int size();
+   
+   public String toString();
 }

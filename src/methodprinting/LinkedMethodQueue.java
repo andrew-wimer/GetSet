@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 11 2021
-* LAST UPDATE:  Aug 11 2021
+* LAST UPDATE:  Aug 29 2021
 */
 
 package methodprinting;
@@ -13,6 +13,7 @@ import java.util.Queue;
  * CLASS DESCRIPTION: Represents a linked list queue of getter/ setter
  * methods/functions to print
  * @author Andrew Wimer
+ * Aug 29 2021 - added equals, empty, toString, and size methods
  * 
  */
 public class LinkedMethodQueue implements MethodQueue {
@@ -77,5 +78,46 @@ public class LinkedMethodQueue implements MethodQueue {
       return queue.add(method);
    }
    
-
+   /**
+    * Return true if queue is equal to another queue
+    * @param anObject
+    * @return 
+    */
+   public boolean equals(Object anObject) { 
+          
+      return queue.equals(anObject);    
+   }    
+   
+   /**
+    * Return true if queue is empty
+    * @return 
+    */
+   public boolean isEmpty()
+   {
+      return queue.isEmpty();
+   }
+   
+   
+   /**
+    * Returns size of queue.
+    * @return 
+    */
+   public int size()
+   {
+      return queue.size();
+   }
+   
+   /**
+    * Returns methodqueue as a string
+    */
+   public String toString()
+   {
+      String asString = "";
+      for(String s : queue)
+      {
+         asString += s;
+      }
+      
+      return asString;
+   }
 }
