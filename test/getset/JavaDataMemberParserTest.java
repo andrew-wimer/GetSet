@@ -41,7 +41,7 @@ public class JavaDataMemberParserTest {
    @Test
    public void testParseFile() throws Exception {
       System.out.println("parseFile");
-      String filePath = "JavaParserTestCase2.txt"; 
+      String filePath = "JavaParserTestCase.txt"; 
       JavaDataMemberParser instance = new JavaDataMemberParser();
       DataMemberMap expResult = new DataMemberMap();
       expResult.put("name", "String");

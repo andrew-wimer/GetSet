@@ -7,6 +7,7 @@
 package methodprinting;
 
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Queue;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Queue;
  */
 public class LinkedMethodQueue implements MethodQueue {
 
-   protected Queue<String> queue = new LinkedList();
+   protected LinkedList<String> queue = new LinkedList();
    
    /**
     * Inserts the specified element into this queue if it is possible to do so immediately
@@ -83,9 +84,18 @@ public class LinkedMethodQueue implements MethodQueue {
     * @param anObject
     * @return 
     */
-   public boolean equals(Object anObject) { 
+   public boolean equals(LinkedMethodQueue list) { 
           
-      return queue.equals(anObject);    
+      if (list.size() != queue.size())
+         return false;
+      for (int i = 0; i < queue.size(); i++)
+      {
+         String s = queue.get(i);
+         String t = list.get(i);
+         if (!s.equals(t))
+            return false;
+      }
+      return true; 
    }    
    
    /**
@@ -97,6 +107,10 @@ public class LinkedMethodQueue implements MethodQueue {
       return queue.isEmpty();
    }
    
+   public String get(int index)
+   {
+      return queue.get(index);
+   }
    
    /**
     * Returns size of queue.

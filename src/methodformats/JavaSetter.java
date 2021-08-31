@@ -56,7 +56,7 @@ public class JavaSetter implements Setter {
       String setterString = "";
       
       
-      setterString += "\tpublic void set" + 
+      setterString += "\n\tpublic void set" + 
               identifier.substring(0,1).toUpperCase() + identifier.substring(1)
               + "(" + returnType + " " + identifier +")" + 
               "\n\t{\n\t\tthis." + identifier + " = " + identifier + 

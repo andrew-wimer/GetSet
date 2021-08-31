@@ -34,11 +34,8 @@ public class JavaGetter implements Getter {
     */
    @Override
    public String writeGetter(String identifier, String returnType)
-   {
-      String getterString = "";
-      
-      
-      getterString += "\npublic " + returnType + " get" + 
+   {        
+      String getterString = "\npublic " + returnType + " get" + 
               identifier.substring(0,1).toUpperCase() + identifier.substring(1)
               + "()" + "\n{\n   return " + identifier + ";" + "\n}\n";
       
@@ -54,11 +51,8 @@ public class JavaGetter implements Getter {
     * @return 
     */
    public String writeFileFormattedGetter(String identifier, String returnType)
-   {
-      String getterString = "";
-      
-      
-      getterString += "\tpublic " + returnType + " get" + 
+   {        
+      String getterString = "\n\tpublic " + returnType + " get" + 
               identifier.substring(0,1).toUpperCase() + identifier.substring(1)
               + "()" + "\n\t{\n\t\treturn " + identifier + ";" + "\n\t}\n";
       
