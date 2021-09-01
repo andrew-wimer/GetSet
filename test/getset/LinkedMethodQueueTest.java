@@ -1,7 +1,7 @@
 /*
  * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 11 2021
-* LAST UPDATE:  Aug 30 2021
+* LAST UPDATE:  Aug 31 2021
  */
 package getset;
 
@@ -103,10 +103,10 @@ public class LinkedMethodQueueTest {
    }
    
    /**
-    * Test of get method, of class LinkedMethodQueue.
+    * Test of getQueue method, of class LinkedMethodQueue.
     */
    @Test
-   public void testGet() {
+   public void testGetQueue() {
       LinkedMethodQueue instance = new LinkedMethodQueue();
       String getterMethod = "public int getNumber()\n" +
       "{\n" + "   return number;\n" + "}";
@@ -114,7 +114,7 @@ public class LinkedMethodQueueTest {
       LinkedList<String> queue = new LinkedList();
       queue.add("public int getNumber()\n" +
       "{\n" + "   return number;\n" + "}");
-      assertEquals(queue.get(0), instance.get(0));
+      assertEquals(queue, instance.getQueue());
    }
 
    /**

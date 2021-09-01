@@ -1,10 +1,12 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 11 2021
-* LAST UPDATE: Aug 11 2021
+* LAST UPDATE: Aug 31 2021
 */
 
 package methodprinting;
+
+import java.util.Queue;
 
 /**
  * INTERFACE DESCRIPTION: Method Queue represents a queue of methods generated
@@ -36,4 +38,6 @@ public interface MethodQueue {
    public int size();
    
    public String toString();
+   
+   public Queue<String> getQueue();
 }

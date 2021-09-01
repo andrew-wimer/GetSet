@@ -53,7 +53,7 @@ public class JavaGSBranch extends GetSetBranch {
     * Main GetSet menu for Java language selection
     * @throws IOException 
     */
-   public void languageMainMenu() throws IOException {
+   private void languageMainMenu() throws IOException {
       BufferedReader reader = 
               new BufferedReader(new InputStreamReader(System.in));
       String choice = "";
@@ -100,7 +100,7 @@ public class JavaGSBranch extends GetSetBranch {
     * processed data members.
     * @throws IOException 
     */
-   public void outputSelectionMenu(DataMemberMap dMM) throws IOException {  
+   private void outputSelectionMenu(DataMemberMap dMM) throws IOException {  
       BufferedReader reader = 
               new BufferedReader(new InputStreamReader(System.in));
 

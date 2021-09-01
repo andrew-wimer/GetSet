@@ -20,7 +20,8 @@ import org.junit.Before;
 public class JavaGSBranchTest {
    
    private final PrintStream standardOut = System.out;
-   private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+   private final ByteArrayOutputStream outputStreamCaptor = 
+           new ByteArrayOutputStream();
    
    @Before
    public void setUp () throws Exception
@@ -36,27 +37,6 @@ public class JavaGSBranchTest {
    public JavaGSBranchTest() {
    }
 
-   /**
-    * Test of run method, of class JavaGSBranch.
-    */
-   @Test
-   public void testRun() throws Exception {
-      
-   }
-
-   /**
-    * Test of languageMainMenu method, of class JavaGSBranch.
-    */
-   @Test
-   public void testLanguageMainMenu() throws Exception {
-   }
-
-   /**
-    * Test of outputSelectionMenu method, of class JavaGSBranch.
-    */
-   @Test
-   public void testOutputSelectionMenu() throws Exception {
-   }
 
    /**
     * Test of importFromJavaFile method, of class JavaGSBranch.

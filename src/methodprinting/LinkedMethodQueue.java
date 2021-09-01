@@ -1,13 +1,12 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 11 2021
-* LAST UPDATE:  Aug 29 2021
+* LAST UPDATE:  Aug 31 2021
 */
 
 package methodprinting;
 
 import java.util.LinkedList;
-import java.util.ListIterator;
 import java.util.Queue;
 
 /**
@@ -88,15 +87,9 @@ public class LinkedMethodQueue implements MethodQueue {
           
       if (list.size() != queue.size())
          return false;
-      for (int i = 0; i < queue.size(); i++)
-      {
-         String s = queue.get(i);
-         String t = list.get(i);
-         if (!s.equals(t))
-            return false;
-      }
-      return true; 
-   }    
+      
+      return (queue.equals(list));
+   } 
    
    /**
     * Return true if queue is empty
@@ -107,9 +100,14 @@ public class LinkedMethodQueue implements MethodQueue {
       return queue.isEmpty();
    }
    
-   public String get(int index)
+
+   /**
+    * Returns the MethodQueue as a generic Queue
+    * @return 
+    */
+   public Queue<String> getQueue()
    {
-      return queue.get(index);
+      return queue;
    }
    
    /**
