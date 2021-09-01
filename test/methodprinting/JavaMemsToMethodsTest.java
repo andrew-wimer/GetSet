@@ -1,12 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/**
+* PROGRAMMED BY: Andrew Wimer
+* CREATED ON: Aug 30 2021
+* LAST UPDATE: Aug 31 2021
+*/
+
 package methodprinting;
 
 import datamemberparse.DataMemberMap;
-import java.util.Arrays;
 import methodformats.JavaGetter;
 import methodformats.JavaSetter;
 import org.junit.Assert;
@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 public class JavaMemsToMethodsTest {
    
    public JavaMemsToMethodsTest() {
+      
    }
 
    /**
@@ -27,6 +28,26 @@ public class JavaMemsToMethodsTest {
     */
    @Test
    public void testGenerateMethodQueues() {
+      JavaMemsToMethods instance = new JavaMemsToMethods();
+      DataMemberMap dMM = new DataMemberMap();
+      String returnType = "int";
+      String identifier = "number";
+      dMM.put(identifier, returnType);
+      
+      MethodQueue[] mQ = new MethodQueue[2];
+      mQ = instance.generateMethodQueues(dMM);
+     
+      MethodQueue[] expMQ = new LinkedMethodQueue[2];
+      expMQ[0] = new LinkedMethodQueue();
+      expMQ[1] = new LinkedMethodQueue();
+      JavaGetter expGet = new JavaGetter();
+      JavaSetter expSet = new JavaSetter();
+      expMQ[0].offer(expGet.writeGetter(identifier, returnType));
+      expMQ[1].offer(expSet.writeSetter(identifier, returnType));
+         
+      for (int i = 0; i < expMQ.length; i++)
+      assertEquals(expMQ[i].getQueue(), mQ[i].getQueue());
+      
    }
 
    /**
@@ -51,15 +72,8 @@ public class JavaMemsToMethodsTest {
       expMQ[0].offer(expGet.writeFileFormattedGetter(identifier, returnType));
       expMQ[1].offer(expSet.writeFileFormattedSetter(identifier, returnType));
       
-      System.out.println(mQ[0].toString());
-      System.out.println(expMQ[0].toString());
-      
-      System.out.println(mQ[1].toString());
-      System.out.println(expMQ[1].toString());
-      
-      
-
-      Assert.assertEquals(expMQ, mQ);
+      for (int i = 0; i < expMQ.length; i++)
+      Assert.assertEquals(expMQ[i].getQueue(), mQ[i].getQueue());
       
    }
 
