@@ -37,12 +37,14 @@ public class JavaGSBranchTest {
    public JavaGSBranchTest() {
    }
 
+   
 
    /**
     * Test of importFromJavaFile method, of class JavaGSBranch.
     */
    @Test
    public void testImportFromJavaFile() throws Exception {
+      JavaGSBranch instance = new JavaGSBranch();
    }
 
    /**
@@ -50,6 +52,7 @@ public class JavaGSBranchTest {
     */
    @Test
    public void testPrintToFile() throws Exception {
+      JavaGSBranch instance = new JavaGSBranch();
    }
 
    /**
@@ -57,6 +60,8 @@ public class JavaGSBranchTest {
     */
    @Test
    public void testPrintToConsole() {
+      
+      JavaGSBranch instance = new JavaGSBranch();
    }
 
    /**
@@ -76,6 +81,7 @@ public class JavaGSBranchTest {
     */
    @Test
    public void testCopyToClipboard() {
+      JavaGSBranch instance = new JavaGSBranch();
    }
    
 }
