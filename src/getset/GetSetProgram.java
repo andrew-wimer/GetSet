@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 19 2021
-* LAST UPDATE: Aug 26 2021
+* LAST UPDATE: Sep 2 2021
 */
 
 package getset;
@@ -74,11 +74,11 @@ public class GetSetProgram {
     */
    public void displayMainMenu()
    {
-      System.out.println("GetSet Main Menu");
-         System.out.println("Choose an objected-oriented language: ");
-         System.out.print("[j] Java\n");
-         System.out.print("[x] Exit\n");
-         System.out.print("\nEnter Menu Option: ");
+      System.out.print("\nGetSet Main Menu\n" +
+              "Choose an objected-oriented language: \n" +
+              "[j] Java\n" +
+              "[x] Exit\n" +
+              "\nEnter Menu Option: ");
    }
 
    
