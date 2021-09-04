@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 19 2021
-* LAST UPDATE: Sep 2 2021
+* LAST UPDATE: Sep 3 2021
 */
 
 package getset;
@@ -15,7 +15,8 @@ import java.io.InputStreamReader;
  * CLASS DESCRIPTION: Runs the GetSet program as per the String 
  * arguments provided when it is called in the main method in GetSet.java
  * @author Andrew Wimer
- * 
+ * Sep 3 2021: moved switch-case statement from start() to separate
+ * mainMenuInput method
  */
 public class GetSetProgram {
    
@@ -46,20 +47,8 @@ public class GetSetProgram {
       {
          displayMainMenu();
          choice = reader.readLine();
-         switch(choice.toLowerCase()){
-            
-            case "j":
-               JavaGSBranch jGSB = new JavaGSBranch();
-               jGSB.run();
-               break;
-            case "x": 
-               System.out.println("Closing program...");
-               System.exit(0);
-               break;
-            default:
-               System.out.println("Invalid choice; try again.");
-               break;
-         }
+         mainMenuInput(choice);
+         
       } while (!choice.equalsIgnoreCase("x"));
       reader.close();
    }
@@ -80,7 +69,28 @@ public class GetSetProgram {
               "[x] Exit\n" +
               "\nEnter Menu Option: ");
    }
-
    
-
+   /**
+    * Receives user's choice of program branch and matches with 
+    * a switch-case branch for that input. 
+    * @param choice
+    * @throws IOException 
+    */
+   public void mainMenuInput(String choice) throws IOException
+   {
+      switch(choice.toLowerCase()){
+            
+            case "j":
+               JavaGSBranch jGSB = new JavaGSBranch();
+               jGSB.run();
+               break;
+            case "x": 
+               System.out.println("Closing program...");
+               System.exit(0);
+               break;
+            default:
+               System.out.println("Invalid choice; try again.");
+               break;
+      }   
+   }
 }
