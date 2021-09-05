@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 *  CREATED ON: August 12 2021
-* LAST UPDATE: August 19 2021
+* LAST UPDATE: Sep 4 2021
 */
 
 package datamemberparse;
@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
  * CLASS DESCRIPTION: JavaDataMemberParse parses Java class files for 
  * Data Members to add to the DataMemberMap
  * @author Andrew Wimer
+ * Sep 4 2021: added parseFromListInFile method
+ * 
  *  Update Aug 19 2021: originally had trimComments(line, inCommentBlock) in
  * parseFile. Now changed so line = trimComments(line, inCommentBlock); 
  * Without this change, comments were never trimmed from the current line. 
@@ -194,5 +196,36 @@ public class JavaDataMemberParser implements DataMemberParser  {
    private String trimAroundBraces(String line)
    {
       throw new UnsupportedOperationException();
+   }
+   
+   /**
+    * Parses data members from a simple list in a file. To be parsed, each 
+    * line must be only two words long, the first word being a data type and
+    * the second word the identifier.
+    * @param filePath
+    * @return
+    * @throws FileNotFoundException 
+    */
+   public DataMemberMap parseFromListInFile(String filePath) 
+           throws FileNotFoundException
+   {
+      DataMemberMap dMM = new DataMemberMap();
+      Scanner scnr = new Scanner(new File(filePath));
+      String newLine = "";
+      int lineCount = 1;
+      
+      while(scnr.hasNextLine()){
+      newLine = scnr.nextLine();
+      String[] stringArray = newLine.split("\\s+");
+      if (stringArray.length == 2)
+         dMM.put(stringArray[1], stringArray[0]);
+      else 
+         System.out.println("Error line " + lineCount + 
+                 ":  Data type and identifier must be "
+                    + "two words only.");
+      lineCount++;
+      }
+      
+      return dMM;
    }
 }

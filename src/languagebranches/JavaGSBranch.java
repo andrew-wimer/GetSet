@@ -1,7 +1,7 @@
 /**
 * PROGRAMMED BY: Andrew Wimer
 * CREATED ON: Aug 23 2021
-* LAST UPDATE: Sep 3 2021
+* LAST UPDATE: Sep 4 2021
 */
 
 package languagebranches;
@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
  * CLASS DESCRIPTION: Handles inputs, submenus, and program functioning 
  * when java is selected as the language to generate getters and setters.
  * @author Andrew Wimer
+ * Sep 4 2021 added option to import a list of data members from a file
  * Sep 3 2021 Added inputFromConsole method, allows user to input multiple 
  * return tyoes + identifiers to console. Switch-case statements 
  * have been removed from menu methods to their own methods in order to
@@ -47,7 +48,7 @@ public class JavaGSBranch extends GetSetBranch {
          System.out.println("Choose method of importing data members: ");
          System.out.print("[c] Input to console\n");
          System.out.print("[j] Import from Java file \n");
-         //System.out.print("[t] Import from list in text file \n");
+         System.out.print("[t] Import from list in text file \n");
          System.out.print("[b] Back \n");
          System.out.print("[x] Exit program\n");
          System.out.print("\nEnter Menu Option: ");
@@ -82,6 +83,9 @@ public class JavaGSBranch extends GetSetBranch {
 
             case "j":
                importFromJavaFile();
+               break;
+            case "t":
+               importFromListInFile();
                break;
             case "c":
                inputFromConsole();
@@ -261,5 +265,26 @@ public class JavaGSBranch extends GetSetBranch {
       MethodPrinter mPrint = new JavaMethodPrinter();
       MethodQueue[] getsSets = dataMembersToQueue(dMM);
       mPrint.copyToClipboard(getsSets[0], getsSets[1]);
+   }
+   
+   /**
+    * Imports simple list of data members from a file. To be parsed, each 
+    * line must be only two words long, the first word being a data type and
+    * the second word the identifier.
+    * @throws FileNotFoundException
+    */
+   public void importFromListInFile() throws FileNotFoundException, IOException
+   {
+      String filePath = getFilePath();
+       DataMemberParser dMP = new JavaDataMemberParser();
+       DataMemberMap dMM = new DataMemberMap();
+       try{
+       dMM = dMP.parseFromListInFile(filePath);
+       outputSelectionMenu(dMM);  
+       }
+       catch(IOException e)
+       {
+          System.out.println("File not found.");
+       }
    }
 }
