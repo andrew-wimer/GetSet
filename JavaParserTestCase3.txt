@@ -1,0 +1,5 @@
+String name
+int number
+double decNumber
+aaaa
+double trouble bubble
